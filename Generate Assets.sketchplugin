@@ -147,7 +147,7 @@ function main(){
 
     // ...then artboards...
     var artboards = [[doc currentPage] artboards];
-    if([artboards length] > 1) {
+    if([artboards length] >= 1) {
       artboards.each(function(artboard){
 
         log("Traversing artboard " + current_artboard_name);
