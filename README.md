@@ -17,6 +17,13 @@ Sketch Generator will let you export *all* your assets, no matter how complex yo
 
 - Just download this project, and move **Generate Assets.sketchplugin** to Sketch's plugins folder (to find it, open Sketch, select 'Custom Script...' from the 'Plugins' menu, click the gear icon and choose 'Open Plugins Folder')
 
+### If you're using both the beta and stable, and know your way around a command line
+
+1. cd to ~/ (or wherever you prefer)
+2. git clone https://github.com/bomberstudios/sketch-generator
+3. ln -s ~/sketch-generator/Generate\ Assets.sketchplugin ~/Library/Containers/com.bohemiancoding.sketch/Data/Library/Application Support/sketch/Plugins/Generate\ Assets.sketchplugin
+4. ln -s ~/sketch-generator/Generate\ Assets.sketchplugin ~/Library/Application\ Support/sketch/Plugins/Generate\ Assets.sketchplugin
+
 ## Usage
 
 - Open your Sketch document
