@@ -14,48 +14,6 @@ var document_path = [[doc fileURL] path].split([doc displayName])[0],
     current_page_name,
     current_artboard_name;
 
-/*
-
-From Adobe's post:
-
-Generator allows you to create image assets in real time as you work, eliminating the tedious steps of copying, slicing and exporting each layer manually, and saving you hours of time. Simply add a file extension to the name of your layer or layer group, and Photoshop will automatically create a JPG, PNG or GIF from the contents of that layer. If you make a change to that layer, the file is immediately updated. This means that you now have a folder of images that are always up-to-date with your Photoshop design.
-
-If you need larger dimension images for Retina displays, you can also quickly create those by adding a scaling factor.
-
-To turn on this functionality, go to File -> Generate -> Image Assets. Now all you have to do is rename the layers or layer groups you want to export. Here are some examples of supported tags:
-
-- .png (Default value: png32 with semi-transparent alpha), .png8, .png24, .png32
-- .jpg (Default value: 9), .jpg(1-10), .jpg(1-100%)
-- .gif
-- 1-n%, (Number) px x (Number) px for scaling
-- can also so '200x? logo.jpg', apparently
-
-Here are some examples of how tags can be used:
-
-- “200% logo-retina.png, logo.png” produces both a 2x and a 1x asset
-- “heroImage.jpg10” produces a 1x asset with max quality
-- “400% tuningfork.png, 250×250 tuningfork.jpg40%” produces a 4x PNG asset and a custom-scaled JPEG asset
-
-For a more complete list of layer names this should support, check the tests in <https://github.com/adobe-photoshop/generator-assets/blob/master/test/test-parse-layer-name.js>
-
-TODO: JPG quality export is not working (there’s no API for that in Sketch yet)
-TODO: set asset size in pixels (XXXxYYY)
-TODO: Export on save
-TODO: Clean assets before exporting
-
-*/
-
-/*
-  Possible Workflows, specially thinking about Android
-
-    1. Export Selection for Android
-        Exports the currently selected object in all know Android pixel densities ratios
-    2. Export Layers as Assets
-        Works like Framer. All layer groups are exported as PNG
-    3. Generator Assets
-        The stupid, braindamaged Adobe system.
-*/
-
 Array.prototype.each = function(callback){
   var count = 0;
   for (var i = 0; i < this.length(); i++){
@@ -90,7 +48,6 @@ function should_export(layer) {
 }
 function get_data_from_layer(layer) {
   // log('Getting data from ' + layer);
-
   var name = [layer name],
       assets = name.split(","),
       assets_data = [];
