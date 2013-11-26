@@ -161,10 +161,16 @@ function main(){
         }
 
         // ...then layers
-        var all_layers = [artboard layers];
-        all_layers.each(function(layer){
-          process_layer(layer);
-        })
+      });
+    } else {
+      log("No artboards in document...");
+      current_artboard_name = 'no_artboard';
+      [file_manager createDirectoryAtPath:(assets_folder + "/" + sanitize_filename(current_page_name) + "/" + sanitize_filename(current_artboard_name)) withIntermediateDirectories:true attributes:nil error:nil];
+
+      var all_layers = [[doc currentPage] layers];
+      log(all_layers);
+      all_layers.each(function(layer){
+        process_layer(layer);
       });
     }
   });
