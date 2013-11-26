@@ -38,6 +38,22 @@ Here are some examples of how tags can be used:
 
 For a more complete list of layer names this should support, check the tests in <https://github.com/adobe-photoshop/generator-assets/blob/master/test/test-parse-layer-name.js>
 
+TODO: JPG quality export is not working (there’s no API for that in Sketch yet)
+TODO: set asset size in pixels (XXXxYYY)
+TODO: Export on save
+TODO: Clean assets before exporting
+
+*/
+
+/*
+  Possible Workflows, specially thinking about Android
+
+    1. Export Selection for Android
+        Exports the currently selected object in all know Android pixel densities ratios
+    2. Export Layers as Assets
+        Works like Framer. All layer groups are exported as PNG
+    3. Generator Assets
+        The stupid, braindamaged Adobe system.
 */
 
 Array.prototype.each = function(callback){
@@ -87,6 +103,7 @@ function get_data_from_layer(layer) {
     var asset_metadata = {
       name: sanitize_filename(filename),
       filetype: current_asset.split(".")[1].substr(0,3),
+      // TODO: Add support for '@2x' and 'HDPI' style scales
       scale: current_asset.match(/(\d+)%/) ? current_asset.match(/(\d+)%/)[1]/100.0 : 1.0
     }
     assets_data.push(asset_metadata);
