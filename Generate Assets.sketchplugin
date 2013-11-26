@@ -110,7 +110,7 @@ function export_layer(layer, options) {
   [frame setY:-100000];
 
   // export
-  var rect = [[copy absoluteRect] rect],
+  var rect = [copy rectByAccountingForStyleSize:[[copy absoluteRect] rect]],
       slice = [MSSlice sliceWithRect:rect scale:options.scale];
 
   // Maybe: add scale in filename
