@@ -65,12 +65,11 @@ Array.prototype.each = function(callback){
   }
 }
 
-
 function process_layer(layer) {
   log('Processing layer "' + [layer name] + '"');
 
   if(should_export(layer)) {
-    log("We should export it...");
+    // log("We should export it...");
     var layer_metadata = get_data_from_layer(layer);
     for(var i=0; i < layer_metadata.length; i++) {
       export_layer(layer, layer_metadata[i]);
@@ -79,7 +78,7 @@ function process_layer(layer) {
 
   // Process sublayers
   if (is_group(layer)) {
-    log("Also, it's a group");
+    // log("Also, it's a group");
     var sublayers = [layer layers];
     sublayers.each(function(sublayer){
       process_layer(sublayer);
@@ -90,7 +89,7 @@ function should_export(layer) {
   return [layer name].match(generator.regexp);
 }
 function get_data_from_layer(layer) {
-  log('Getting data from ' + layer);
+  // log('Getting data from ' + layer);
 
   var name = [layer name],
       assets = name.split(","),
@@ -107,7 +106,7 @@ function get_data_from_layer(layer) {
       scale: current_asset.match(/(\d+)%/) ? current_asset.match(/(\d+)%/)[1]/100.0 : 1.0
     }
     assets_data.push(asset_metadata);
-    log('Asset scale: ' + asset_metadata.scale);
+    // log('Asset scale: ' + asset_metadata.scale);
   }
   return assets_data;
 }
@@ -132,11 +131,10 @@ function export_layer(layer, options) {
 
   // Maybe: add scale in filename
   // filename += "-" + options.scale + "x";
-
   [doc saveArtboardOrSlice:slice toFile:(filename + "." + options.filetype)];
 
   // remove it
-  log("Removing copy");
+  // log("Removing copy");
   [copy removeFromParent];
 
 }
@@ -149,27 +147,26 @@ function main(){
   log('Sketch Generator running')
 
   // Traverse pages...
-
   [doc pages].each(function(page){
 
     [doc setCurrentPage:page];
 
     current_page_name = [[doc currentPage] name];
+
     log("#####################################################################################")
     log("Traversing page: " + current_page_name);
     log("#####################################################################################")
 
-    // make a folder for each page
     [file_manager createDirectoryAtPath:(assets_folder + "/" + sanitize_filename(current_page_name)) withIntermediateDirectories:true attributes:nil error:nil];
 
     // ...then artboards...
     var artboards = [[doc currentPage] artboards];
+
     if([artboards length] >= 1) {
       artboards.each(function(artboard){
 
         log("Traversing artboard " + current_artboard_name);
 
-        // Make a folder for each artboard
         current_artboard_name = [artboard name];
         [file_manager createDirectoryAtPath:(assets_folder + "/" + sanitize_filename(current_page_name) + "/" + sanitize_filename(current_artboard_name)) withIntermediateDirectories:true attributes:nil error:nil];
 
