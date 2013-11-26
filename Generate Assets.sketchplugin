@@ -44,10 +44,11 @@ function process_layer(layer) {
   }
 }
 function should_export(layer) {
+  log("should_export(" + [layer name] + ")")
   return [layer name].match(generator.regexp);
 }
 function get_data_from_layer(layer) {
-  // log('Getting data from ' + layer);
+  log('Getting data from ' + layer);
   var name = [layer name],
       assets = name.split(","),
       assets_data = [];
@@ -122,16 +123,23 @@ function main(){
     if([artboards length] >= 1) {
       artboards.each(function(artboard){
 
+        current_artboard_name = [artboard name];
         log("Traversing artboard " + current_artboard_name);
 
-        current_artboard_name = [artboard name];
         [file_manager createDirectoryAtPath:(assets_folder + "/" + sanitize_filename(current_page_name) + "/" + sanitize_filename(current_artboard_name)) withIntermediateDirectories:true attributes:nil error:nil];
 
-        if(should_export(artboard)) {
-          export_layer(artboard, get_data_from_layer(artboard));
-        }
+        // TODO: support artboards named artboard.png
+        // if(should_export(artboard)) {
+        //   log("Will try to export artboard " + [artboard name]);
+        //   export_layer(artboard, get_data_from_layer(artboard));
+        // }
 
-        // ...then layers
+        // var all_layers = [[doc currentPage] layers];
+        var all_layers = [artboard layers];
+        all_layers.each(function(layer){
+          process_layer(layer);
+        });
+
       });
     } else {
       log("No artboards in document...");
@@ -139,7 +147,6 @@ function main(){
       [file_manager createDirectoryAtPath:(assets_folder + "/" + sanitize_filename(current_page_name) + "/" + sanitize_filename(current_artboard_name)) withIntermediateDirectories:true attributes:nil error:nil];
 
       var all_layers = [[doc currentPage] layers];
-      log(all_layers);
       all_layers.each(function(layer){
         process_layer(layer);
       });
